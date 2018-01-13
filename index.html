@@ -11,10 +11,8 @@
         // The following line is apparently not necessary:
         // .then(buf => WebAssembly.compile(buf))
         .then(mod => WebAssembly.instantiate(mod, {
-          // I think I need to provide alert, somehow, but how?
-          alert: (x) => alert(x),
           env: {
-            alert: (x) => alert(x),
+            alert: (x) => alert('HUH' + x),
           },
         }))
         .then((ins) => {
