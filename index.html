@@ -8,12 +8,14 @@
 
       fetch('target/static/wasm-minimal.wasm')
         .then(data => data.arrayBuffer())
-        // I saw this in some tutorials, but it apparently is not necessary:
+        // The following line is apparently not necessary:
         // .then(buf => WebAssembly.compile(buf))
         .then(mod => WebAssembly.instantiate(mod, {
+          // I think I need to provide alert, somehow, but how?
+          alert: (x) => alert(x),
           env: {
-            alert: (x) => console.log(x),
-          }
+            alert: (x) => alert(x),
+          },
         }))
         .then((ins) => {
           window.ins = ins;

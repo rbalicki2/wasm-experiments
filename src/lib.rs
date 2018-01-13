@@ -3,8 +3,8 @@ extern crate libc;
 use std::os::raw::c_char;
 // use std::ffi::CStr;
 use std::ffi::CString;
-use std::os::raw::c_void;
-use std::mem;
+// use std::os::raw::c_void;
+// use std::mem;
 
 mod externs;
 
@@ -18,21 +18,20 @@ pub fn get_str() -> *mut c_char {
 }
 
 #[no_mangle]
-pub fn do_console() {
-  println!("WHY YOU NO WORk");
+pub fn add_one(x: i32) -> i32 {
+  x + 1
+}
+
+#[no_mangle]
+pub fn alert_me() {
+  // if you uncomment the following, along with #[macro_use] extern crate stdweb,
+  // the file will still compile, but the wasm bundle will throw an error:
+  // LinkError: WebAssembly Instantiation: Import #0 module="env" function="__js_1"
+  // error: function import requires a callable
+  //  at <anonymous>
+  //
   // js! { alert(); }
+
+  // this does nothing:
   externs::alert("HELLO");
-}
-
-#[no_mangle]
-pub extern "C" fn alloc(size: usize) -> *mut c_void {
-    let mut buf = Vec::with_capacity(size);
-    let ptr = buf.as_mut_ptr();
-    mem::forget(buf); // This is JS' responsibility now
-    return ptr as *mut c_void;
-}
-
-#[no_mangle]
-pub extern "C" fn time() -> String {
-    String::from("Beer o'clock")
 }
