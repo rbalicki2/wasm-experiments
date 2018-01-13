@@ -1,0 +1,11 @@
+[package]
+name = "wasm-minimal"
+version = "0.1.0"
+authors = ["rbalicki2 <robert.balicki@jetty.com>"]
+
+[dependencies]
+stdweb = "0.3.0"
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]

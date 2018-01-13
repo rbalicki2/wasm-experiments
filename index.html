@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script type="text/javascript">
+      const convertToString = (ptr, len) =>
+        Array.from(new Uint8Array(window.ins.instance.exports.memory.buffer, ptr, len))
+          .map(String.fromCharCode)
+          .join('');
+
+      fetch('target/static/wasm-minimal.wasm')
+        .then(data => data.arrayBuffer())
+        // I saw this in some tutorials, but it apparently is not necessary:
+        // .then(buf => WebAssembly.compile(buf))
+        .then(mod => WebAssembly.instantiate(mod, {
+          env: {
+            alert: (x) => console.log(x),
+          }
+        }))
+        .then((ins) => {
+          window.ins = ins;
+        });
+    </script>
+  </head>
+  <body>
+    <h1>WASM Demo</h1>
+  </body>
+</html>
